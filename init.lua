@@ -1,6 +1,7 @@
 local table = require 'table'
-local insert = table.insert
+local pack = table.pack
 local unpack = table.unpack
+local insert = table.insert
 
 local function makefss(self, f)
 	local c, fss = self.parent, {{f}, self.mws}
@@ -36,9 +37,9 @@ local function use(self, ...)
 end
 
 local function call(self, f, ...)
-	local args, res = {...}
+	local args, res = pack(...)
 	local fss = makefss(self, function(ctx)
-		res = {true, f(ctx, unpack(args))}
+		res = pack(true, f(ctx, unpack(args, 1, args.n)))
 	end)
 	local ok, err = pcall(makectx(fss, #fss, 1))
 	if res == nil then
@@ -47,7 +48,7 @@ local function call(self, f, ...)
 		end
 		return ok, err
 	end
-	return unpack(res)
+	return unpack(res, 1, res.n)
 end
 
 local function clone(self)
