@@ -2,6 +2,8 @@ local table = require 'table'
 local pack = table.pack
 local unpack = table.unpack
 local insert = table.insert
+local setmetatable = setmetatable
+local pcall = pcall
 
 local function makefss(self, f)
 	local c, fss = self.parent, {{f}, self.mws}
