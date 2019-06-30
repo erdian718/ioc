@@ -13,6 +13,7 @@ end
 
 local function makectx(fss, i, j, p)
 	return setmetatable({}, {
+		__index = p;
 		__call = function(self)
 			local fs = fss[i]
 			while fs ~= nil do
